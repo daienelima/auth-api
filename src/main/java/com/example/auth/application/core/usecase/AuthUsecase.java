@@ -18,16 +18,14 @@ public class AuthUsecase implements LoginInputPort {
     private final UserOutputPort userOutputPort;
     private final PasswordEncoder passwordEncoder;
     private final TokenUsecase tokenUsecase;
-    private final RefreshTokenOutputPort refreshTokenOutputPort;
 
     @Value("${jwt.refresh-expiration}")
     private long refreshExpiration;
 
-    public AuthUsecase(UserOutputPort userOutputPort, PasswordEncoder passwordEncoder, TokenUsecase tokenUsecase, RefreshTokenOutputPort refreshTokenOutputPort) {
+    public AuthUsecase(UserOutputPort userOutputPort, PasswordEncoder passwordEncoder, TokenUsecase tokenUsecase) {
         this.userOutputPort = userOutputPort;
         this.passwordEncoder = passwordEncoder;
         this.tokenUsecase = tokenUsecase;
-        this.refreshTokenOutputPort = refreshTokenOutputPort;
     }
 
 
@@ -35,7 +33,7 @@ public class AuthUsecase implements LoginInputPort {
         if (userOutputPort.existsByUsername(user.username())) {
             throw new RuntimeException("Username already exists");
         }
-        userOutputPort.save(new User(user.username(),
+        userOutputPort.save(new User(null, user.username(),
                 passwordEncoder.encode(user.password()), List.of(new Role(null, "ROLE_USER"))));
     }
 

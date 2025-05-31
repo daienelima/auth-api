@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface UserInputPort {
     User findByUsername(String username);
-    void updateRoles(User user);
+    void updateRoles(String username, String role);
     List<User> findAllUsers();
 }

@@ -96,8 +96,9 @@ Swagger: http://localhost:8080/swagger-ui.html
 ### 🔸 Administrativo (requer ROLE_ADMIN)
 
 | Método | Endpoint              | Descrição               |
-|--------|------------------------|-------------------------|
-| GET    | `/api/admin/users`     | Lista todos os usuários |
+|--------|-----------------------|-------------------------|
+| GET    | `/api/admin/users`    | Lista todos os usuários |
+| PATCH    | `/api/admin/user`     | Alterar Role            |
 
 ---
 

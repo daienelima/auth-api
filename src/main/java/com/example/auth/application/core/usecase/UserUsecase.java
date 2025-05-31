@@ -35,12 +35,19 @@ public class UserUsecase implements UserInputPort {
     }
 
     @Override
-    public void updateRoles(User user) {
+    public void updateRoles(String username, String role) {
+        var existingUser = userOutputPort.findByUsername(username);
+        if (existingUser == null) {
+            throw new RuntimeException("User not found");
+        }
 
+        existingUser.roles().add(new Role(null, role));
+
+        userOutputPort.updateRoles(existingUser, existingUser.id());
     }
 
     @Override
     public List<User> findAllUsers() {
-        return List.of();
+        return userOutputPort.findAllUsers();
     }
 }

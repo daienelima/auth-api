@@ -18,16 +18,12 @@ public class AuthApiIntegrationTest {
 
     @Test
     public void testRegisterAndLogin() {
-        RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setUsername("john");
-        registerRequest.setPassword("password");
+        RegisterRequest registerRequest = new RegisterRequest("john", "password");
 
         ResponseEntity<String> registerResponse = restTemplate.postForEntity("/api/auth/register", registerRequest, String.class);
         assertThat(registerResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        AuthRequest authRequest = new AuthRequest();
-        authRequest.setUsername("john");
-        authRequest.setPassword("password");
+        AuthRequest authRequest = new AuthRequest("john", "password");
 
         ResponseEntity<String> loginResponse = restTemplate.postForEntity("/api/auth/login", authRequest, String.class);
         assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.OK);

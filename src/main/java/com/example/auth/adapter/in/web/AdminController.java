@@ -5,10 +5,7 @@ import com.example.auth.application.core.domain.Role;
 import com.example.auth.application.port.in.UserInputPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,10 +36,12 @@ public class AdminController {
         return ResponseEntity.ok(users.isEmpty() ? List.of() : userResponses);
     }
 
+    @PatchMapping("/user")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateRole(@RequestHeader("X-username") String userName,
-                                        @RequestHeader("X-Role") String role ,
-                                        @RequestHeader("X-token") String token) {
-       // userInputPort.updateRoles();
-        return null;
+                                        @RequestHeader("X-Role") String role) {
+
+        userInputPort.updateRoles(userName, role);
+        return ResponseEntity.ok().build();
     }
 }

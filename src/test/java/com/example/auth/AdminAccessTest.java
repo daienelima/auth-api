@@ -20,15 +20,11 @@ public class AdminAccessTest {
 
     @Test
     public void testUserCannotAccessAdminEndpoint() {
-        RegisterRequest request = new RegisterRequest();
-        request.setUsername("user1");
-        request.setPassword("123456");
+        RegisterRequest request = new RegisterRequest("user1", "123456");
 
         restTemplate.postForEntity("/api/auth/register", request, String.class);
 
-        AuthRequest login = new AuthRequest();
-        login.setUsername("user1");
-        login.setPassword("123456");
+        AuthRequest login = new AuthRequest("user1", "123456");
 
         ResponseEntity<Map> loginResp = restTemplate.postForEntity("/api/auth/login", login, Map.class);
         String token = (String) loginResp.getBody().get("token");
